@@ -33,4 +33,9 @@ class City {
     data['postal_code'] = postalCode;
     return data;
   }
+
+  static List<City> fromJsonList(List list) {
+    if (list.isEmpty) return List<City>.empty();
+    return list.map((item) => City.fromJson(item)).toList();
+  }
 }
