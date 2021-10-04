@@ -1,7 +1,12 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  var isHidden = true.obs;
+  var hiddenKotaAsal = true.obs;
+  var hiddenKotaTujuan = true.obs;
 
-  var provId = 0.obs;
+  var provAsalId = 0.obs;
+  var provTujuanId = 0.obs;
+
+  var kotaAsalId = 0.obs;
+  var kotaTujuan = 0.obs;
 }

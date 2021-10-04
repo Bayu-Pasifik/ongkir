@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
@@ -16,17 +15,20 @@ class HomeView extends GetView<HomeController> {
         body: ListView(
           padding: EdgeInsets.all(20),
           children: [
-            Provinsi(),
+            Provinsi(
+              tipe: "asal",
+            ),
             Obx(
-              () => controller.isHidden.isTrue
+              () => controller.hiddenKotaAsal.isTrue
                   ? SizedBox()
                   : Kota(
-                      provId: controller.provId.value,
+                      provId: controller.provAsalId.value,
                     ),
-            )
+            ),
+            Provinsi(
+              tipe: "tujuan",
+            ),
           ],
         ));
   }
 }
-
-

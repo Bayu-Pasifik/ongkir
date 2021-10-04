@@ -6,17 +6,17 @@ import 'package:get/get.dart';
 import 'package:ongkir/app/data/models/province_model.dart';
 import 'package:ongkir/app/modules/home/controllers/home_controller.dart';
 import 'package:http/http.dart' as http;
-class Provinsi extends GetView<HomeController> {
-  const Provinsi({
-    Key? key,
-  }) : super(key: key);
 
+class Provinsi extends GetView<HomeController> {
+  const Provinsi({Key? key, required this.tipe}) : super(key: key);
+
+  final String tipe;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownSearch<Province>(
-        label: "Provinsi",
+        label: tipe == "asal" ? "Provinsi Asal" : "Provinsi Tujuan",
         showSearchBox: true,
         showClearButton: true,
         onFind: (String filter) async {
@@ -60,13 +60,23 @@ class Provinsi extends GetView<HomeController> {
             hintText: "Cari Provinsi"),
         onChanged: (value) {
           if (value != null) {
-            print(value.province);
-            controller.isHidden.value = false;
-            controller.provId.value = int.parse(value.provinceId!);
+            if (tipe == "asal") {
+              print(value.province);
+              controller.hiddenKotaAsal.value = false;
+              controller.provAsalId.value = int.parse(value.provinceId!);
+            } else {
+              print(value.province);
+              controller.hiddenKotaTujuan.value = false;
+              controller.provTujuanId.value = int.parse(value.provinceId!);
+            }
           } else {
-            print("Tidak memilih apapun");
-            controller.isHidden.value = true;
-            controller.provId.value = 0;
+            if (tipe == "asal") {
+              controller.hiddenKotaAsal.value = true;
+              controller.provAsalId.value = 0;
+            } else {
+              controller.hiddenKotaTujuan.value = true;
+              controller.provTujuanId.value = 0;
+            }
           }
         },
       ),
