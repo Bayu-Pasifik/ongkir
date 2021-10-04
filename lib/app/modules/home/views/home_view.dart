@@ -65,8 +65,8 @@ class HomeView extends GetView<HomeController> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   hintText: "Cari Provinsi"),
-              onChanged: (Value) {
-                print(Value!.province);
+              onChanged: (value) {
+                print(value!.province);
               },
             )
           ],
