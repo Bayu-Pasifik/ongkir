@@ -12,15 +12,19 @@ class Kota extends GetView<HomeController> {
   const Kota({
     required this.provId,
     Key? key,
+    required this.tipe,
   }) : super(key: key);
 
   final int provId;
+  final String tipe;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownSearch<City>(
-        label: "Kota / Kabupaten",
+        label: tipe == "asal"
+            ? "Kota / Kabupaten Asal"
+            : "Kota / Kabupaten Tujuan",
         showSearchBox: true,
         showClearButton: true,
         onFind: (String filter) async {
@@ -62,11 +66,27 @@ class Kota extends GetView<HomeController> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
             hintText: "Cari kota / kabupaten"),
-        onChanged: (value) {
-          if (value != null) {
-            print(value.cityName);
+        onChanged: (cityValue) {
+          if (cityValue != null) {
+            if (tipe == "asal") {
+              print(cityValue.province);
+              //controller.hiddenKotaAsal.value = false;
+              controller.kotaAsalId.value = int.parse(cityValue.cityId!);
+            } else {
+              print(cityValue.province);
+              //controller.hiddenKotaTujuan.value = false;
+              controller.kotaTujuan.value = int.parse(cityValue.cityId!);
+            }
           } else {
-            print("Tidak memilih apapun");
+            if (tipe == "asal") {
+              // controller.hiddenKotaAsal.value = true;
+              // controller.kotaAsalId.value = 0;
+              print("Tidak memilih apapun");
+            } else {
+              // controller.hiddenKotaTujuan.value = true;
+              // controller.kotaTujuan.value = 0;
+              print("Tidak memilih apapun");
+            }
           }
         },
       ),

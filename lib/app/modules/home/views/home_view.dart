@@ -22,11 +22,20 @@ class HomeView extends GetView<HomeController> {
               () => controller.hiddenKotaAsal.isTrue
                   ? SizedBox()
                   : Kota(
+                      tipe: "asal",
                       provId: controller.provAsalId.value,
                     ),
             ),
             Provinsi(
               tipe: "tujuan",
+            ),
+            Obx(
+              () => controller.hiddenKotaAsal.isTrue
+                  ? SizedBox()
+                  : Kota(
+                      tipe: "tujuan",
+                      provId: controller.provTujuanId.value,
+                    ),
             ),
           ],
         ));
