@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ongkir/app/modules/home/views/widgets/berat.dart';
+import 'package:ongkir/app/modules/home/views/widgets/kurir.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/kota.dart';
 import 'widgets/provinsi.dart';
@@ -37,6 +39,8 @@ class HomeView extends GetView<HomeController> {
                       provId: controller.provTujuanId.value,
                     ),
             ),
+            BeratBarang(),
+            Kurir()
           ],
         ));
   }
