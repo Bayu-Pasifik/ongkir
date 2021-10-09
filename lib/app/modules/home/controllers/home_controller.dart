@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class HomeController extends GetxController {
   var hiddenKotaAsal = true.obs;
@@ -13,6 +14,17 @@ class HomeController extends GetxController {
 
   double berat = 0.0;
   String satuan = "gram";
+
+  var hiddenButton = true.obs;
+  var kurir = "".obs;
+
+  void showButton() {
+    if (kotaAsalId.value != 0 && kotaTujuan.value != 0 && kurir.value != "") {
+      hiddenButton.value = false;
+    } else {
+      hiddenButton.value = true;
+    }
+  }
 
   void ubahBerat(String value) {
     berat = double.tryParse(value) ?? 0.0;

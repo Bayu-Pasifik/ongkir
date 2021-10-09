@@ -69,6 +69,7 @@ class Provinsi extends GetView<HomeController> {
               controller.hiddenKotaTujuan.value = false;
               controller.provTujuanId.value = int.parse(value.provinceId!);
             }
+            controller.showButton();
           } else {
             if (tipe == "asal") {
               controller.hiddenKotaAsal.value = true;

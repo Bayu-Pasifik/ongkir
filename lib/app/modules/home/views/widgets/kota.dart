@@ -77,15 +77,14 @@ class Kota extends GetView<HomeController> {
               //controller.hiddenKotaTujuan.value = false;
               controller.kotaTujuan.value = int.parse(cityValue.cityId!);
             }
+            controller.showButton();
           } else {
             if (tipe == "asal") {
-              // controller.hiddenKotaAsal.value = true;
-              // controller.kotaAsalId.value = 0;
               print("Tidak memilih apapun");
+              controller.kotaAsalId.value = 0;
             } else {
-              // controller.hiddenKotaTujuan.value = true;
-              // controller.kotaTujuan.value = 0;
               print("Tidak memilih apapun");
+              controller.kotaTujuan.value = 0;
             }
           }
         },
