@@ -78,6 +78,7 @@ class Provinsi extends GetView<HomeController> {
               controller.hiddenKotaTujuan.value = true;
               controller.provTujuanId.value = 0;
             }
+            controller.showButton();
           }
         },
       ),

@@ -69,12 +69,10 @@ class Kota extends GetView<HomeController> {
         onChanged: (cityValue) {
           if (cityValue != null) {
             if (tipe == "asal") {
-              print(cityValue.province);
-              //controller.hiddenKotaAsal.value = false;
+              print(cityValue.cityName);
               controller.kotaAsalId.value = int.parse(cityValue.cityId!);
             } else {
-              print(cityValue.province);
-              //controller.hiddenKotaTujuan.value = false;
+              print(cityValue.cityName);
               controller.kotaTujuan.value = int.parse(cityValue.cityId!);
             }
             controller.showButton();
@@ -86,6 +84,7 @@ class Kota extends GetView<HomeController> {
               print("Tidak memilih apapun");
               controller.kotaTujuan.value = 0;
             }
+            controller.showButton();
           }
         },
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ongkir/app/modules/home/views/widgets/berat.dart';
+import 'package:ongkir/app/modules/home/views/widgets/button_ongkir.dart';
 import 'package:ongkir/app/modules/home/views/widgets/kurir.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/kota.dart';
@@ -11,6 +12,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red[900],
           title: Text('HomeView'),
           centerTitle: true,
         ),
@@ -40,7 +42,8 @@ class HomeView extends GetView<HomeController> {
                     ),
             ),
             BeratBarang(),
-            Kurir()
+            Kurir(),
+            CekOgkir()
           ],
         ));
   }

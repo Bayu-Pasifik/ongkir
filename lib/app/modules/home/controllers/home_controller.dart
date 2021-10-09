@@ -19,7 +19,12 @@ class HomeController extends GetxController {
   var kurir = "".obs;
 
   void showButton() {
-    if (kotaAsalId.value != 0 && kotaTujuan.value != 0 && kurir.value != "") {
+    if (kotaAsalId.value != 0 &&
+        kotaTujuan.value != 0 &&
+        kurir.value != "" &&
+        berat > 0 &&
+        provAsalId.value != 0 &&
+        provTujuanId.value != 0) {
       hiddenButton.value = false;
     } else {
       hiddenButton.value = true;
@@ -72,7 +77,7 @@ class HomeController extends GetxController {
     }
 
     print("$berat gram");
-    debugPrint("$berat gram");
+    showButton();
   }
 
   void ubahSatuan(String value) {
@@ -120,6 +125,7 @@ class HomeController extends GetxController {
 
     satuan = value;
     debugPrint("$berat gram");
+    showButton();
   }
 
   late TextEditingController beratController;
@@ -128,5 +134,11 @@ class HomeController extends GetxController {
   void onInit() {
     beratController = TextEditingController(text: "$berat");
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    beratController.dispose();
+    super.onClose();
   }
 }
