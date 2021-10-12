@@ -13,7 +13,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[900],
-          title: Text('HomeView'),
+          title: Text('Cek Ongkos Kirim'),
           centerTitle: true,
         ),
         body: ListView(

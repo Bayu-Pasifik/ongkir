@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:http/http.dart' as http;
+import 'package:ongkir/app/modules/courier_model.dart';
 
 class HomeController extends GetxController {
   var hiddenKotaAsal = true.obs;
@@ -12,7 +16,7 @@ class HomeController extends GetxController {
   var kotaAsalId = 0.obs;
   var kotaTujuan = 0.obs;
 
-  double berat = 0.0;
+  int berat = 0;
   String satuan = "gram";
 
   var hiddenButton = true.obs;
@@ -32,7 +36,7 @@ class HomeController extends GetxController {
   }
 
   void ubahBerat(String value) {
-    berat = double.tryParse(value) ?? 0.0;
+    berat = int.tryParse(value) ?? 0;
     String cekSatuan = satuan;
 
     switch (cekSatuan) {
@@ -46,10 +50,10 @@ class HomeController extends GetxController {
         berat = berat * 100;
         break;
       case "lbs":
-        berat = berat * 2204.62;
+        berat = berat * 2204;
         break;
       case "pound":
-        berat = berat * 2204.62;
+        berat = berat * 2204;
         break;
       case "kg":
         berat = berat * 1000;
@@ -63,15 +67,7 @@ class HomeController extends GetxController {
       case "gram":
         berat = berat;
         break;
-      case "dg":
-        berat = berat / 10;
-        break;
-      case "cg":
-        berat = berat / 100;
-        break;
-      case "mg":
-        berat = berat / 1000;
-        break;
+      
       default:
         berat = berat;
     }
@@ -81,7 +77,7 @@ class HomeController extends GetxController {
   }
 
   void ubahSatuan(String value) {
-    berat = double.tryParse(beratController.text) ?? 0.0;
+    berat = int.tryParse(beratController.text) ?? 0;
     switch (value) {
       case "ton":
         berat = berat * 1000000;
@@ -93,10 +89,10 @@ class HomeController extends GetxController {
         berat = berat * 100;
         break;
       case "lbs":
-        berat = berat * 2204.62;
+        berat = berat * 2204;
         break;
       case "pound":
-        berat = berat * 2204.62;
+        berat = berat * 2204;
         break;
       case "kg":
         berat = berat * 1000;
@@ -110,15 +106,7 @@ class HomeController extends GetxController {
       case "gram":
         berat = berat;
         break;
-      case "dg":
-        berat = berat / 10;
-        break;
-      case "cg":
-        berat = berat / 100;
-        break;
-      case "mg":
-        berat = berat / 1000;
-        break;
+      
       default:
         berat = berat;
     }
@@ -126,6 +114,43 @@ class HomeController extends GetxController {
     satuan = value;
     debugPrint("$berat gram");
     showButton();
+  }
+
+  void ongkosKirim() async {
+    Uri url = Uri.parse("https://api.rajaongkir.com/starter/cost");
+    try {
+      final response = await http.post(url, body: {
+        "origin": "$kotaAsalId",
+        "destination": "$kotaTujuan",
+        "weight": "$berat",
+        "courier": "$kurir",
+      }, headers: {
+        "key": "6ad5c787375f05ff69fb31cfd255ec09",
+        "content-type": "application/x-www-form-urlencoded",
+      });
+      var data = json.decode(response.body) as Map<String, dynamic>;
+      var result = data["rajaongkir"]["results"] as List<dynamic>;
+
+      var listAllCourier = CourierModel.fromJsonList(result);
+      var courier = listAllCourier[0];
+      print(courier);
+      Get.defaultDialog(
+          title: courier.name!,
+          content: Column(
+            children: courier.costs!
+                .map((e) => ListTile(
+                      title: Text("${e.service}"),
+                      subtitle: Text("${e.cost![0].value}"),
+                      trailing: Text(courier.code == "pos"
+                          ? "${e.cost![0].etd}"
+                          : "${e.cost![0].etd} HARI"),
+                    ))
+                .toList(),
+          ));
+    } catch (e) {
+      print(e);
+      Get.defaultDialog(title: "Terjadi kesalahan", middleText: e.toString());
+    }
   }
 
   late TextEditingController beratController;

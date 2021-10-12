@@ -43,9 +43,7 @@ class BeratBarang extends GetView<HomeController> {
                 "hg",
                 "dag",
                 "gram",
-                "dg",
-                "cg",
-                "mg"
+                
               ],
               showSearchBox: true,
               searchBoxDecoration: InputDecoration(
